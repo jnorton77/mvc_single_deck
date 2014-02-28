@@ -15,21 +15,30 @@ class Deck
 
 	def parse
 		text = File.open(file, "rb").read
-		text_lines = text.split("\n")
-		text_lines.delete("")
-		text_lines
+		text = text.split("\n")
+		text.delete("")
+		a = 0
+		b = 1
+		cards = []
+		(text.length / 2).times do
+			cards << Card.new(text[a], text[b])
+			a += 2
+			b += 2
+		end
+		cards
 	end
 
 end
 
 class Card
+	attr_reader :question, :answer
 
-	def initialize()
-		# @question = 
-		# @answer   = 
+	def initialize(question, answer)
+		@question = question
+		@answer   = answer
 	end
 
 end
 
 deck = Deck.new("flashcard_samples.txt")
-p deck.cards
+puts deck.cards
