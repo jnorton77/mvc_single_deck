@@ -3,11 +3,9 @@ module DeckLoader
     text = File.open(file, "rb").read
     text = text.split("\n")
     text.delete("")
-    cards = []
-    text.each_slice(2) do |slice|
-      cards << Card.new(slice[0], slice[1])
+    text.each_slice(2).map do |slice|
+      Card.new(slice[0], slice[1])
     end
-    cards
   end
 end
 
@@ -18,10 +16,9 @@ class Card
     @question = question
     @answer   = answer
   end
-
 end
 
-class Flashcards
+class FlashcardsController
   attr_reader :deck, :view
 
   def initialize(file)
@@ -80,26 +77,6 @@ class CardView
   end
 end
 
-game = Flashcards.new("flashcard_samples.txt")
+game = FlashcardsController.new("flashcard_samples.txt")
 game.run!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
