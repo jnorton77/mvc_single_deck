@@ -2,15 +2,10 @@ module DeckLoader
   def self.parse(file)
     text = File.open(file, "rb").read
     text = text.split("\n")
-    # each_slice
     text.delete("")
-    a = 0
-    b = 1
     cards = []
-    (text.length / 2).times do
-      cards << Card.new(text[a], text[b])
-      a += 2
-      b += 2
+    text.each_slice(2) do |slice|
+      cards << Card.new(slice[0], slice[1])
     end
     cards
   end
@@ -36,13 +31,10 @@ class Flashcards
 
   def run!
     view.welcome
-    index = 0
-    # each
-    until index == deck.length
-      view.render(deck[index])
+    deck.each do |card|
+      view.render(card)
       answer = user_input
-      compare(answer, deck[index])
-      index += 1
+      compare(answer, card)
     end
     view.the_end
   end
@@ -55,18 +47,17 @@ class Flashcards
     if input == cards.answer
       view.correct
       true
+    elsif input == "quit"
+      exit
     else
       view.incorrect
       compare(user_input, cards)
       false
     end
   end
-
-
 end
 
 class CardView
-
   def render(cards)
     puts cards.question
   end
@@ -91,13 +82,6 @@ end
 
 game = Flashcards.new("flashcard_samples.txt")
 game.run!
-
-  # def displayer(scenario)
-  #     case scenario
-  #     when welcome then "Welcome to Ruby Flashcards! Here's your first card:"
-  #     when correct
-  #     end
-  # end
 
 
 
