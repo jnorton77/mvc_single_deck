@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # THE MODEL
 
 # a Deck class should load in the .txt. file
@@ -25,11 +26,30 @@ end
 class Card
 
 	def initialize()
-		# @question = 
-		# @answer   = 
+		# @question =
+		# @answer   =
 	end
 
 end
 
 deck = Deck.new("flashcard_samples.txt")
 p deck.cards
+=======
+
+# CONTROLLER - John
+
+class Flashcards
+
+# run! method (ref to render, user_input, compare)
+
+end
+
+# VIEW - Pablo
+
+class CardView
+
+# displays card
+# def to_s
+
+end
+>>>>>>> Devin_John_Pablo
