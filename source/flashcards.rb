@@ -39,8 +39,9 @@ p deck.cards
 # CONTROLLER - John
 
 class Flashcards
-
 # run! method (ref to render, user_input, compare)
+
+
 
 end
 
