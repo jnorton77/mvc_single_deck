@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-# THE MODEL
-
-# a Deck class should load in the .txt. file
-# once it's got the file, it needs to parse it and make new Card objects
-# card object have @question and @answer variables
-# the Deck class has just a @deck variable
-
 class Deck
 	attr_reader :cards, :file
 
@@ -34,42 +26,102 @@ end
 class Card
 	attr_reader :question, :answer
 
-<<<<<<< HEAD
 	def initialize(question, answer)
 		@question = question
 		@answer   = answer
-=======
-	def initialize()
-		# @question =
-		# @answer   =
->>>>>>> 4ebe146283a9caea0c01eb0f0b7514cacc494041
 	end
 
 end
 
-deck = Deck.new("flashcard_samples.txt")
-<<<<<<< HEAD
-puts deck.cards
-=======
-p deck.cards
-=======
-
-# CONTROLLER - John
-
 class Flashcards
-# run! method (ref to render, user_input, compare)
+	attr_reader :deck, :view
 
+	def initialize(file)
+		@deck = Deck.new(file)
+		@view = CardView.new
+	end
+
+	def run!
+		view.welcome
+		index = 0
+		until index == deck.cards.length
+			view.render(deck.cards[index])
+			answer = user_input
+			compare(answer, deck.cards[index])
+			index += 1
+		end
+		view.the_end
+	end
+
+	def user_input
+		gets.chomp
+	end
+
+	def compare(user_input, cards)
+			if user_input == cards.answer
+				view.correct
+				return true
+			else
+				view.incorrect
+				compare(gets.chomp, cards)
+				return false
+			end
+	end
 
 
 end
-
-# VIEW - Pablo
 
 class CardView
 
-# displays card
-# def to_s
+	def render(cards)
+		puts cards.question
+	end
 
+	def welcome
+		puts "Welcome to Ruby Flashcards! Here's your first card:"
+	end
+
+	def correct
+		puts "That's CORRECT!"
+		puts
+	end
+
+	def incorrect
+		puts "\nINCORRECT...\ntry again:"
+	end
+
+	def the_end
+		puts "That's it! Thanks for playing."
+	end
 end
->>>>>>> Devin_John_Pablo
->>>>>>> 4ebe146283a9caea0c01eb0f0b7514cacc494041
+
+game = Flashcards.new("flashcard_samples.txt")
+game.run!
+
+  # def displayer(scenario)
+  # 		case scenario
+  # 		when welcome then "Welcome to Ruby Flashcards! Here's your first card:"
+  # 		when correct
+  # 		end
+  # end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
