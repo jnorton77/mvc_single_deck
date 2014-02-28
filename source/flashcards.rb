@@ -1,14 +1,8 @@
-class Deck
-  attr_reader :cards, :file
-
-  def initialize(file)
-    @file = file
-    @cards = parse
-  end
-
-  def parse
+module DeckLoader
+  def self.parse(file)
     text = File.open(file, "rb").read
     text = text.split("\n")
+    # each_slice
     text.delete("")
     a = 0
     b = 1
@@ -20,7 +14,6 @@ class Deck
     end
     cards
   end
-
 end
 
 class Card
@@ -37,17 +30,18 @@ class Flashcards
   attr_reader :deck, :view
 
   def initialize(file)
-    @deck = Deck.new(file)
+    @deck = DeckLoader.parse(file)
     @view = CardView.new
   end
 
   def run!
     view.welcome
     index = 0
-    until index == deck.cards.length
-      view.render(deck.cards[index])
+    # each
+    until index == deck.length
+      view.render(deck[index])
       answer = user_input
-      compare(answer, deck.cards[index])
+      compare(answer, deck[index])
       index += 1
     end
     view.the_end
@@ -57,14 +51,14 @@ class Flashcards
     gets.chomp
   end
 
-  def compare(user_input, cards)
-    if user_input == cards.answer
+  def compare(input, cards)
+    if input == cards.answer
       view.correct
-      return true
+      true
     else
       view.incorrect
-      compare(gets.chomp, cards)
-      return false
+      compare(user_input, cards)
+      false
     end
   end
 
